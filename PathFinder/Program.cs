@@ -8,10 +8,10 @@ namespace PathFinder
     {
         static void Main(string[] args)
         {
-            var map = MapLoader.MapLoader.LoadFromFile("Map.txt");
+            var map = MapLoader.MapLoader.LoadFromFile("MapD.txt");
 
             var arrival = new Coordinates(1, 1);
-            var departure = new Coordinates(17, 5);
+            var departure = new Coordinates(14, 3);
             var path = map.FindPath(departure, arrival);
 
             DisplayMap(map, path);

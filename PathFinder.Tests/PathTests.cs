@@ -42,7 +42,7 @@ namespace PathFinder.Tests
             // Arrange 
             var path = new Path();
             var firstStep = new Coordinates(5, 5);
-            path.AddStep(firstStep);
+            path = path.AddStep(firstStep);
 
             // Act
             var canAdd = path.CanAddStep(firstStep.Left.Left);

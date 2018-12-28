@@ -32,45 +32,36 @@ namespace PathFinder.Map
             CheckCellIsNotBlock(nameof(departure), departure);
             CheckCellIsNotBlock(nameof(arrival), arrival);
 
-            var steps = FindPath(departure, new List<Coordinates>(), arrival, new List<Coordinates>());
+            Dictionary<Coordinates, Path> potentialPaths = new Dictionary<Coordinates, Path>();
 
-            var path = Path.Create(steps);
-
-            return path;
-        }
-
-        public Coordinates[] FindPath(Coordinates departure, List<Coordinates> steps, Coordinates arrival, List<Coordinates> alreadyVisited)
-        {
-            if (alreadyVisited.Contains(departure) || !_cells.ContainsKey(departure) || GetCell(departure).Type == CellType.Block)
+            foreach(var keyValue in _cells.Where(kv => kv.Value.Type != CellType.Block))
             {
-                return null;
-            }
-            var myPath = steps.Clone();
-            myPath.Add(departure);
-            alreadyVisited.Add(departure);
-
-            if (myPath.Last() == arrival)
-            {
-                return myPath.ToArray();
+                potentialPaths[keyValue.Key] = keyValue.Key == departure ? Path.Create(new[] { departure }) : null;
             }
 
-            var nextStep = departure.Surrounding.FirstOrDefault(s => s == arrival);
-            if (nextStep != null)
+            while (potentialPaths[arrival] == null)
             {
-                myPath.Add(arrival);
-                return myPath.ToArray();
-            }
-
-            foreach(var coord in departure.Surrounding)
-            {
-                var newPath = FindPath(coord, myPath, arrival, alreadyVisited);
-                if (newPath != null)
+                bool newCellDiscovered = false;
+                var knownCells = potentialPaths.Where(p => p.Value != null).Select(p => p.Key).ToList();
+                foreach (var coordinates in knownCells)
                 {
-                    return newPath;
+                    foreach(Coordinates neighbor in coordinates.Surrounding)
+                    {
+                        if (potentialPaths.ContainsKey(neighbor) && potentialPaths[neighbor] == null)
+                        {
+                            newCellDiscovered = true;
+                            potentialPaths[neighbor] = potentialPaths[coordinates].AddStep(neighbor);
+                        }
+                    }
+                }
+
+                if (!newCellDiscovered)
+                {
+                    break;
                 }
             }
 
-            return null;
+            return potentialPaths[arrival];
         }
 
         private void CheckCellIsOnMap(string name, Coordinates coordinates)
@@ -93,6 +84,5 @@ namespace PathFinder.Map
         {
             return _cells.ToDictionary(e => e.Key, e => e.Value);
         }
-
     }
 }
