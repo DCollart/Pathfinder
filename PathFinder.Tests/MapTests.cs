@@ -105,7 +105,7 @@ namespace PathFinder.Tests
         }
 
         [Fact]
-        public void AccessibleCellWithMapEAndPonderationShouldBeSuccessfull()
+        public void AccessibleCellWithMapEAndWeightingShouldBeSuccessfull()
         {
             // Arrange 
             var map = MapLoader.MapLoader.LoadFromFile("MapB.txt");

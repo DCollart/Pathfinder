@@ -20,7 +20,12 @@ namespace PathFinder.MapLoader
                 for(int x = 0; x < rows[y].Length; x++)
                 {
                     CellType type = rows[y][x] == 'X' ? CellType.Block : CellType.Classic;
-                    map.AddCell(new Cell(type, new Coordinates(x, y)));
+                    int weight = 0;
+                    if (type == CellType.Classic && int.TryParse(rows[y][x].ToString(), out int result))
+                    {
+                        weight = result;
+                    }
+                    map.AddCell(new Cell(type, new Coordinates(x, y), weight));
                 }
             }
 
