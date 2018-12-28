@@ -13,7 +13,7 @@ namespace PathFinder.Tests
         public void CanAddStepToEmptyPath()
         {
             // Arrange 
-            var path = new Path();
+            var path = Path.Empty;
 
             // Act
             var canAdd = path.CanAddStep(new Coordinates(5, 5));
@@ -26,7 +26,7 @@ namespace PathFinder.Tests
         public void CanAddStepIfInLastStepSurrounding()
         {
             // Arrange 
-            var path = new Path();
+            var path = Path.Empty;
             var firstStep = new Coordinates(5, 5);
             path.AddStep(firstStep);
             // Act
@@ -40,7 +40,7 @@ namespace PathFinder.Tests
         public void CannotAddStepIfNotInLastStepSurrounding()
         {
             // Arrange 
-            var path = new Path();
+            var path = Path.Empty;
             var firstStep = new Coordinates(5, 5);
             path = path.AddStep(firstStep);
 

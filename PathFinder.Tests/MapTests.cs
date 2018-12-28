@@ -60,7 +60,7 @@ namespace PathFinder.Tests
 
 
         [Fact]
-        public void AccessibleCellWithThirdMapShouldBeSuccessfull()
+        public void AccessibleCellWithMapCShouldBeSuccessfull()
         {
             // Arrange 
             var map = MapLoader.MapLoader.LoadFromFile("MapC.txt");
@@ -77,7 +77,7 @@ namespace PathFinder.Tests
         }
 
         [Fact]
-        public void AccessibleCellWithFirstMapShouldBeSuccessfull()
+        public void AccessibleCellWithMapAShouldBeSuccessfull()
         {
             // Arrange 
             var map = MapLoader.MapLoader.LoadFromFile("MapA.txt");
@@ -91,7 +91,7 @@ namespace PathFinder.Tests
         }
 
         [Fact]
-        public void AccessibleCellWithSecondMapShouldBeSuccessfull()
+        public void AccessibleCellWithMapBShouldBeSuccessfull()
         {
             // Arrange 
             var map = MapLoader.MapLoader.LoadFromFile("MapB.txt");
@@ -102,6 +102,20 @@ namespace PathFinder.Tests
             // Assert
             path.Should().NotBeNull();
             path.Length.Should().Be(23);
+        }
+
+        [Fact]
+        public void AccessibleCellWithMapEAndPonderationShouldBeSuccessfull()
+        {
+            // Arrange 
+            var map = MapLoader.MapLoader.LoadFromFile("MapB.txt");
+
+            // Act
+            var path = map.FindPath(new Map.Coordinates(1, 1), new Map.Coordinates(3, 1));
+
+            // Assert
+            path.Should().NotBeNull();
+            path.Length.Should().Be(5);
         }
 
     }

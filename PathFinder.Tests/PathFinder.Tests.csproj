@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="MapE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="MapC.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

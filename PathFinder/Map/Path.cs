@@ -11,7 +11,7 @@ namespace PathFinder.Map
 
         public int Length => _steps.Count;
 
-        public Path()
+        private Path()
         {
             _steps = new HashSet<Coordinates>();
         }
@@ -61,6 +61,7 @@ namespace PathFinder.Map
         }
 
         public Coordinates Departure => _steps.First();
+
         public Coordinates Arrival => _steps.Last();
 
         public bool Contains(Coordinates coordinates)
@@ -77,6 +78,7 @@ namespace PathFinder.Map
             var path = new Path(step);
             return path;
         }
+
         public static Path Create(Coordinates[] steps)
         {
             if (steps == null)
@@ -86,5 +88,7 @@ namespace PathFinder.Map
             var path = new Path(steps);
             return path;
         }
+
+        public static Path Empty => new Path();
     }
 }
