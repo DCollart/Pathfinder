@@ -12,8 +12,12 @@ namespace PathFinder
 
             var arrival = new Coordinates(1, 1);
             var departure = new Coordinates(14, 3);
-            var path = map.FindPath(departure, arrival);
 
+            //var departure = new Coordinates(1, 1);
+            //var arrival = new Coordinates(3, 1);
+
+            var path = map.FindPath(departure, arrival);
+            Console.WriteLine($"Path weight : {path.Weight}");
             DisplayMap(map, path);
             
             Console.ReadKey();

@@ -108,7 +108,7 @@ namespace PathFinder.Tests
         public void AccessibleCellWithMapEAndWeightingShouldBeSuccessfull()
         {
             // Arrange 
-            var map = MapLoader.MapLoader.LoadFromFile("MapB.txt");
+            var map = MapLoader.MapLoader.LoadFromFile("MapE.txt");
 
             // Act
             var path = map.FindPath(new Map.Coordinates(1, 1), new Map.Coordinates(3, 1));

@@ -25,7 +25,7 @@ namespace PathFinder.MapLoader
                     {
                         weight = result;
                     }
-                    map.AddCell(new Cell(type, new Coordinates(x, y), weight));
+                    map.AddCell(new Cell(type, new Coordinates(x, y), weight == 0 ? 1 : weight));
                 }
             }
 

@@ -32,36 +32,40 @@ namespace PathFinder.Map
             CheckCellIsNotBlock(nameof(departure), departure);
             CheckCellIsNotBlock(nameof(arrival), arrival);
 
-            Dictionary<Coordinates, Path> potentialPaths = new Dictionary<Coordinates, Path>();
+            Dictionary<Coordinates, PotentialPath> potentialPaths = new Dictionary<Coordinates, PotentialPath>();
 
             foreach(var keyValue in _cells.Where(kv => kv.Value.Type != CellType.Block))
             {
-                potentialPaths[keyValue.Key] = keyValue.Key == departure ? Path.Create(Step.Create(departure)) : null;
+                potentialPaths[keyValue.Key] = keyValue.Key == departure ? 
+                    new PotentialPath() {
+                        Path = Path.Create(Step.Create(departure)),
+                        Explored = false 
+                    } : null;
             }
 
             while (potentialPaths[arrival] == null)
             {
-                bool newCellDiscovered = false;
-                var knownCells = potentialPaths.Where(p => p.Value != null).Select(p => p.Key).ToList();
-                foreach (var coordinates in knownCells)
-                {
-                    foreach(Coordinates neighbor in coordinates.Surrounding)
-                    {
-                        if (potentialPaths.ContainsKey(neighbor) && potentialPaths[neighbor] == null)
-                        {
-                            newCellDiscovered = true;
-                            potentialPaths[neighbor] = potentialPaths[coordinates].AddStep(Step.Create(neighbor));
-                        }
-                    }
-                }
-
-                if (!newCellDiscovered)
+                var nextCellsToExplore = potentialPaths.Where(p => p.Value != null && !p.Value.Explored);
+                if (!nextCellsToExplore.Any())
                 {
                     break;
                 }
+                var minPathWeight = nextCellsToExplore.Min(c => c.Value.Path.Weight);
+                var nextCellToExplore = nextCellsToExplore.First(c => c.Value.Path.Weight == minPathWeight);
+                nextCellToExplore.Value.Explored = true;
+                foreach (var neighbor in _cells[nextCellToExplore.Key].Coordinates.Surrounding)
+                {
+                    if (potentialPaths.ContainsKey(neighbor) && potentialPaths[neighbor] == null)
+                    {
+                        potentialPaths[neighbor] = new PotentialPath() {
+                            Path = nextCellToExplore.Value.Path.AddStep(Step.Create(neighbor, _cells[neighbor].Weight)),
+                            Explored = false
+                        };
+                    }
+                }
             }
 
-            return potentialPaths[arrival];
+            return potentialPaths[arrival]?.Path;
         }
 
         private void CheckCellIsOnMap(string name, Coordinates coordinates)
@@ -83,6 +87,12 @@ namespace PathFinder.Map
         public Dictionary<Coordinates, Cell> GetAllCells()
         {
             return _cells.ToDictionary(e => e.Key, e => e.Value);
+        }
+
+        private class PotentialPath
+        {
+            public Path Path { get; set; }
+            public bool Explored { get; set; }
         }
     }
 }
