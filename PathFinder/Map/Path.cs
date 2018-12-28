@@ -10,6 +10,7 @@ namespace PathFinder.Map
         private HashSet<Step> _steps;
 
         public int Length => _steps.Count;
+        public int Weight => _steps.Sum(s => s.Weight);
 
         private Path()
         {

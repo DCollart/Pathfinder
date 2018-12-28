@@ -8,6 +8,7 @@ namespace PathFinder.Map
     {
         public CellType Type { get; }
         public Coordinates Coordinates { get; set; }
+        public int Weight { get; set; }
 
         public Cell(CellType type, Coordinates coordinates)
         {

@@ -50,5 +50,21 @@ namespace PathFinder.Tests
             // Assert
             canAdd.Should().BeFalse();
         }
+
+        [Fact]
+        public void AddStepShouldAddWeight()
+        {
+            // Arrange
+            var path = Path.Empty;
+            path = path.AddStep(Step.Create(new Coordinates(1, 1), 2));
+            path = path.AddStep(Step.Create(path.Arrival.Right, 3));
+            path = path.AddStep(Step.Create(path.Arrival.Up, 4));
+
+            // Act
+            int weight = path.Weight;
+
+            // Assert
+            weight.Should().Be(9);
+        }
     }
 }
