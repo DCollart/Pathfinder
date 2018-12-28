@@ -36,7 +36,7 @@ namespace PathFinder.Map
 
             foreach(var keyValue in _cells.Where(kv => kv.Value.Type != CellType.Block))
             {
-                potentialPaths[keyValue.Key] = keyValue.Key == departure ? Path.Create(new[] { departure }) : null;
+                potentialPaths[keyValue.Key] = keyValue.Key == departure ? Path.Create(Step.Create(departure)) : null;
             }
 
             while (potentialPaths[arrival] == null)
@@ -50,7 +50,7 @@ namespace PathFinder.Map
                         if (potentialPaths.ContainsKey(neighbor) && potentialPaths[neighbor] == null)
                         {
                             newCellDiscovered = true;
-                            potentialPaths[neighbor] = potentialPaths[coordinates].AddStep(neighbor);
+                            potentialPaths[neighbor] = potentialPaths[coordinates].AddStep(Step.Create(neighbor));
                         }
                     }
                 }

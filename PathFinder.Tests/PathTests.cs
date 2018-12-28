@@ -16,7 +16,7 @@ namespace PathFinder.Tests
             var path = Path.Empty;
 
             // Act
-            var canAdd = path.CanAddStep(new Coordinates(5, 5));
+            var canAdd = path.CanAddCoordinates(new Coordinates(5, 5));
 
             // Assert
             canAdd.Should().BeTrue();
@@ -27,10 +27,10 @@ namespace PathFinder.Tests
         {
             // Arrange 
             var path = Path.Empty;
-            var firstStep = new Coordinates(5, 5);
+            var firstStep = Step.Create(new Coordinates(5, 5), 1);
             path.AddStep(firstStep);
             // Act
-            var canAdd = path.CanAddStep(firstStep.Left);
+            var canAdd = path.CanAddCoordinates(firstStep.Coordinates.Left);
 
             // Assert
             canAdd.Should().BeTrue();
@@ -41,11 +41,11 @@ namespace PathFinder.Tests
         {
             // Arrange 
             var path = Path.Empty;
-            var firstStep = new Coordinates(5, 5);
+            var firstStep = Step.Create(new Coordinates(5, 5), 1);
             path = path.AddStep(firstStep);
 
             // Act
-            var canAdd = path.CanAddStep(firstStep.Left.Left);
+            var canAdd = path.CanAddCoordinates(firstStep.Coordinates.Left.Left);
 
             // Assert
             canAdd.Should().BeFalse();
