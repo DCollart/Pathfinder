@@ -8,18 +8,16 @@ namespace PathFinder
     {
         static void Main(string[] args)
         {
-            var map = MapLoader.MapLoader.LoadFromFile("MapD.txt");
+            var map = MapLoader.MapLoader.LoadFromString(MapGenerator.MapGenerator.GenerateMap(30, 30));
 
             var arrival = new Coordinates(1, 1);
-            var departure = new Coordinates(14, 3);
+            var departure = new Coordinates(28, 28);
 
-            //var departure = new Coordinates(1, 1);
-            //var arrival = new Coordinates(3, 1);
 
             var path = map.FindPath(departure, arrival);
             Console.WriteLine($"Path weight : {path.Weight}");
             DisplayMap(map, path);
-            
+
             Console.ReadKey();
         }
 
@@ -55,7 +53,7 @@ namespace PathFinder
                                 Console.BackgroundColor = ConsoleColor.Black;
                             }
 
-                            Console.Write(coordinates == path.Arrival ? 'A' : coordinates == path.Departure ? 'D' : ' ');
+                            Console.Write(coordinates == path.Arrival ? 'A' : coordinates == path.Departure ? 'D' : cells[coordinates].Weight);
                         }
                     }
                     else

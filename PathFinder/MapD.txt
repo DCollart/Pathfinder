@@ -2,6 +2,6 @@
 X                 X
 X             X   X
 X            X X  X
+X            9 9  X
 X            9    X
-X                 X
 XXXXXXXXXXXXXXXXXXX
