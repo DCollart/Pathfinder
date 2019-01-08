@@ -14,23 +14,25 @@ namespace PathFinder.MapGenerator
             {
                 if (y == 0 || y == height - 1)
                 {
-                    builder.AppendLine(new string('X', width));
+                    builder.Append(new string('X', width));
+                    if (y == 0)
+                    {
+                        builder.Append(Environment.NewLine);
+                    }
                 }
                 else
                 {
-                    for (int x = 0; x < width - 1; x++)
+                    for (int x = 0; x < width; x++)
                     {
                         if ((x == 1 && y == 1) || (x == width - 2 && y == height - 2))
                         {
                             builder.Append("1");
-                            continue;
                         }
-                        if (x == 0 || x == width - 1)
+                        else if (x == 0 || x == width - 1)
                         {
                             builder.Append("X");
                         }
-
-                        if (random.Next(0, 6) == 0)
+                        else if (random.Next(0, 6) == 0)
                         {
                             builder.Append("X");
                         }

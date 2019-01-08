@@ -1,4 +1,5 @@
 ﻿using PathFinder.Map;
+using System.Linq;
 
 namespace PathFinder.MapLoader
 {
@@ -13,7 +14,7 @@ namespace PathFinder.MapLoader
         {
             var map = new Map.Map();
 
-            var rows = stringMap.Split("\n");
+            var rows = stringMap.Split("\n").Select(s => s.Trim()).ToArray();
 
             for(int y = 0; y < rows.Length; y++)
             {

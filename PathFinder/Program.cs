@@ -8,14 +8,13 @@ namespace PathFinder
     {
         static void Main(string[] args)
         {
-            var map = MapLoader.MapLoader.LoadFromString(MapGenerator.MapGenerator.GenerateMap(30, 30));
+            var stringMap = MapGenerator.MapGenerator.GenerateMap(30, 30);
+            var map = MapLoader.MapLoader.LoadFromString(stringMap);
 
-            var arrival = new Coordinates(1, 1);
-            var departure = new Coordinates(28, 28);
-
+            var departure = new Coordinates(1, 1);
+            var arrival = new Coordinates(28, 28);
 
             var path = map.FindPath(departure, arrival);
-            Console.WriteLine($"Path weight : {path.Weight}");
             DisplayMap(map, path);
 
             Console.ReadKey();
@@ -23,6 +22,14 @@ namespace PathFinder
 
         static void DisplayMap(Map.Map map, Path path)
         {
+            if (path != null)
+            {
+                Console.WriteLine($"Path weight : {path.Weight}");
+            }
+            else
+            {
+                Console.WriteLine("No path found");
+            }
             var cells = map.GetAllCells();
             var minX = cells.OrderBy(c => c.Key.X).First().Key.X;
             var maxX = cells.OrderByDescending(c => c.Key.X).First().Key.X;
@@ -31,7 +38,7 @@ namespace PathFinder
 
             for (int y = minY; y <= maxY; y++)
             {
-                for (int x = minX; x < maxX; x++)
+                for (int x = minX; x <= maxX; x++)
                 {
                     Coordinates coordinates = new Coordinates(x, y);
                     if (cells.ContainsKey(coordinates))
@@ -53,7 +60,7 @@ namespace PathFinder
                                 Console.BackgroundColor = ConsoleColor.Black;
                             }
 
-                            Console.Write(coordinates == path.Arrival ? 'A' : coordinates == path.Departure ? 'D' : cells[coordinates].Weight);
+                            Console.Write(coordinates == path.Arrival ? "A" : coordinates == path.Departure ? "D" : cell.Weight.ToString());
                         }
                     }
                     else
